@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Customer Detail</h2>
+<div class="container">
+    <form [formGroup]="customerForm">
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Name</mat-label>
+            <input type="text" matInput formControlName="name">
+            <mat-error *ngIf="nameControl && nameControl.hasError('required')">
+                Name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Age</mat-label>
+            <input type="number" matInput formControlName="age">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Sex</mat-label>
+            <mat-select formControlName="sex">
+                <mat-option *ngFor="let sex of sexList" [value]="sex.value">
+                    {{sex.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option *ngFor="let type of typeList" [value]="type.value">
+                    {{type.name}}
+                </mat-option>
+                <mat-error *ngIf="nameControl && nameControl.hasError('required')">
+                    Type is <strong>required</strong>
+                </mat-error>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button cdkFocusInitial (click)="onSave()">Save</button>
+</mat-dialog-actions>
