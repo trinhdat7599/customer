@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { SeriesOptionsType } from 'highcharts';
 import { debounceTime } from 'rxjs';
 import { MODE } from 'src/constants/customer.constant';
 import { Customer } from 'src/models/customer.model';
@@ -11,6 +12,7 @@ import { CustomerService } from 'src/services/customer.service';
 import { ExportService } from 'src/services/export.service';
 import { MyErrorStateMatcher } from 'src/services/handle-error-message.service';
 import { CustomerDetailDialogComponent } from './customer-detail-dialog/customer-detail-dialog.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-customer',
@@ -32,9 +34,11 @@ export class CustomerComponent implements OnInit, AfterViewInit {
 
   matcher = new MyErrorStateMatcher();
 
+  series!: SeriesOptionsType[]
+
   get newDataSource() {
     const currentData = [] as any;
-    this.dataSource.data.filter(e => currentData.push({...e}));
+    this.dataSource.data.filter(e => currentData.push({ ...e }));
     return currentData;
   }
 
@@ -59,6 +63,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   getCustomerDataSource() {
     this.customerService.getCustomerData().subscribe((res) => {
       this.dataSource.data = res;
+      this.parseDataSourceToSeriesChart();
     });
   }
 
@@ -84,6 +89,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
       const data = this.dataSource.data;
       data.push(newObj);
       this.dataSource.data = data;
+      this.parseDataSourceToSeriesChart();
     });
   }
 
@@ -100,7 +106,8 @@ export class CustomerComponent implements OnInit, AfterViewInit {
           return result;
         }
         return e;
-      })
+      });
+      this.parseDataSourceToSeriesChart();
     });
   }
 
@@ -108,6 +115,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     if (window.confirm("Are you sure to want remove this record?")) {
       const newData = this.dataSource.data.filter(e => e.id !== ele.id);
       this.dataSource.data = newData.map((e, index) => ({ ...e, id: index + 1 }));
+      this.parseDataSourceToSeriesChart();
     }
   }
 
@@ -144,5 +152,27 @@ export class CustomerComponent implements OnInit, AfterViewInit {
       }
     }
     return data;
+  }
+
+  parseDataSourceToSeriesChart() {
+    let rawData: any = {};
+    rawData.name = 'Quantity';
+    rawData.type = 'pie';
+    rawData.data = [];
+    const rawSource = _.groupBy(this.dataSource.data, x => x.type);
+    Object.keys(rawSource).forEach(e => {
+      if (e === undefined) {
+        rawData.data.push({
+          name: 'Others',
+          y: rawSource[e].length,
+        });
+      } else {
+        rawData.data.push({
+          name: e,
+          y: rawSource[e].length,
+        });
+      }
+    });
+    this.series = rawData;
   }
 }

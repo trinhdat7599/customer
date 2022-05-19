@@ -13,6 +13,7 @@ import { CustomerComponent } from './customer.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CustomerDetailDialogComponent } from './customer-detail-dialog/customer-detail-dialog.component';
 import { CommonModule } from '@angular/common';
+import { PieChartModule } from '../pie-chart/pie-chart.module';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { CommonModule } from '@angular/common';
         CommonModule,
         MatMenuModule,
         MatListModule,
+        PieChartModule,
     ],
     providers: [],
 })
