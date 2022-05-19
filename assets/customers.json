@@ -1,42 +1,52 @@
 [
     {
         "id": 1,
-        "name": "Hydrogen"
+        "name": "Hydrogen",
+        "type": "Normal"
     },
     {
         "id": 2,
-        "name": "Helium"
+        "name": "Helium",
+        "type": "Normal"
     },
     {
         "id": 3,
-        "name": "Lithium"
+        "name": "Lithium",
+        "type": "Normal"
     },
     {
         "id": 4,
-        "name": "Beryllium"
+        "name": "Beryllium",
+        "type": "Normal"
     },
     {
         "id": 5,
-        "name": "Boron"
+        "name": "Boron",
+        "type": "Normal"
     },
     {
         "id": 6,
-        "name": "Carbon"
+        "name": "Carbon",
+        "type": "Normal"
     },
     {
         "id": 7,
-        "name": "Nitrogen"
+        "name": "Nitrogen",
+        "type": "Normal"
     },
     {
         "id": 8,
-        "name": "Oxygen"
+        "name": "Oxygen",
+        "type": "Normal"
     },
     {
         "id": 9,
-        "name": "Fluorine"
+        "name": "Fluorine",
+        "type": "Normal"
     },
     {
         "id": 10,
-        "name": "Neon"
+        "name": "Neon",
+        "type": "Normal"
     }
 ]
