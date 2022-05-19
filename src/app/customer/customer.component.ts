@@ -82,14 +82,16 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     dialogRef.componentInstance.mode = MODE.CREATE;
 
     dialogRef.afterClosed().subscribe(result => {
-      const newObj = {
-        ...result,
-        id: this.dataSource.data.length + 1,
+      if (result) {
+        const newObj = {
+          ...result,
+          id: this.dataSource.data.length + 1,
+        }
+        const data = this.dataSource.data;
+        data.push(newObj);
+        this.dataSource.data = data;
+        this.parseDataSourceToSeriesChart();
       }
-      const data = this.dataSource.data;
-      data.push(newObj);
-      this.dataSource.data = data;
-      this.parseDataSourceToSeriesChart();
     });
   }
 
